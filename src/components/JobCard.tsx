@@ -5,12 +5,18 @@ import {
 	DollarSign,
 	Building2,
 } from "lucide-react";
+import { useState } from "react";
 
 interface JobCardProps {
 	job: Job;
 }
 
 export default function JobCard({ job }: JobCardProps) {
+	const [summary, setSummary] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+
 	const formatPostedAt = (dateString: string) => {
 		const date = new Date(dateString);
 		const now = new Date();
@@ -20,6 +26,34 @@ export default function JobCard({ job }: JobCardProps) {
 		if (diffDays === 1) return "Yesterday";
 		return `${diffDays} days ago`;
 	};
+
+	const handleSammary = async () => {
+		setIsLoading(true);
+		setError(null);
+		setSummary(null);
+
+		try {
+			// call server api to get summary
+			const res = await fetch("/api/jobs/summary", {
+				method: "POST",
+				body: JSON.stringify({ job: { title: job.title, description: job.description, company: job.company } }),
+			});
+
+			console.log("RES: ", res);
+
+			if (!res.ok) {
+				throw new Error("Failed to generate summary");
+			}
+
+			const data = await res.json();
+			setSummary(data.summary);
+		} catch (error) {
+			console.error("Error generating summary:", error);
+			setError("Failed to generate summary");
+		} finally {
+			setIsLoading(false);
+		}
+	}
 
 	return (
 		<div className="w-full max-w-md flex flex-col bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors text-left">
@@ -74,11 +108,20 @@ export default function JobCard({ job }: JobCardProps) {
 					Apply
 				</a>
 				<button
-					onClick={() => { }}
+					onClick={handleSammary}
 					className="w-full py-2.5 rounded-md border border-zinc-800 text-zinc-400 text-sm font-semibold hover:bg-zinc-800 transition-colors"
 				>
-					AI Summary
+					{isLoading ? "Summarizing..." : "AI Summary"}
 				</button>
+				{summary && (
+					<div className="px-6 pb-6 animate-in fade-in slide-in-from-top-2 duration-300">
+						<div className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
+							<p className="text-sm text-zinc-300 leading-relaxed italic">
+								{summary}
+							</p>
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

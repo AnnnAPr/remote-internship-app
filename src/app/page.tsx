@@ -103,7 +103,7 @@ function HomeContent() {
 				</form>
 			</header>
 
-			{/* Main Content */}
+			{/* Main Content after user's search*/}
 			<section className="w-full max-w-6xl flex flex-col items-start">
 				{!hasSearched ? (
 					<div className="w-full py-12 border border-zinc-900 rounded-xl">
