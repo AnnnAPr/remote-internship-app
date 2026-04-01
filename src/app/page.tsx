@@ -48,6 +48,12 @@ function HomeContent() {
 		router.push(`${pathname}?${params.toString()}`);
 	};
 
+	const handleReset = () => {
+		setSearchInput("");
+		setActiveSearchQuery("");
+		setHasSearched(false);
+		router.push(pathname);
+	}
 
 	const filteredJobs = useMemo(() => {
 		if (!activeSearchQuery.trim()) return [];
@@ -84,6 +90,16 @@ function HomeContent() {
 					<button type="submit" className="w-full sm:w-auto bg-white hover:bg-zinc-200 text-zinc-950 font-bold py-3 px-8 rounded-lg transition-all active:scale-98">
 						Search Jobs
 					</button>
+
+					{hasSearched && (
+						<button 
+							type="button"
+							onClick={handleReset}
+							className="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-8 rounded-lg transition-all active:scale-98"
+						>
+							Reset
+						</button>
+					)}
 				</form>
 			</header>
 
@@ -116,7 +132,7 @@ function HomeContent() {
 								))}
 							</div>
 						) : (
-							<p className="text-zinc-500 py-6">No jobs found matching your search.</p>
+							<p className="text-zinc-500 py-6">No jobs found matching your search. Try different keyword.</p>
 						)}
 					</div>
 				)}
