@@ -6,6 +6,7 @@ import {
 	Building2,
 } from "lucide-react";
 import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 interface JobCardProps {
 	job: Job;
@@ -15,7 +16,8 @@ export default function JobCard({ job }: JobCardProps) {
 	const [summary, setSummary] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
+	const [showSignIn, setShowSignIn] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
 
 	const formatPostedAt = (dateString: string) => {
 		const date = new Date(dateString);
@@ -33,7 +35,6 @@ export default function JobCard({ job }: JobCardProps) {
 		setSummary(null);
 
 		try {
-			// call server api to get summary
 			const res = await fetch("/api/jobs/summary", {
 				method: "POST",
 				body: JSON.stringify({ job: { title: job.title, description: job.description, company: job.company } }),
@@ -53,6 +54,35 @@ export default function JobCard({ job }: JobCardProps) {
 		} finally {
 			setIsLoading(false);
 		}
+	}
+
+	const handleSaveJob = async () => {
+		const res = await fetch("/api/jobs/save", {
+        method: "POST",
+        body: JSON.stringify({ job }),
+    });
+    
+    if (res.status === 401) {
+        setShowSignIn(true);
+        return;
+    }
+    
+    if (res.ok) {
+        alert("Job saved successfully!");
+				setIsSaved(true);
+				setShowSignIn(false);
+    }
+	}
+
+	const handleGoogleLogin = async () => {
+		const supabase = createClient();
+		const currentPath = window.location.pathname + window.location.search;
+    await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(currentPath)}`,
+        },
+    });
 	}
 
 	return (
@@ -122,6 +152,25 @@ export default function JobCard({ job }: JobCardProps) {
 						</div>
 					</div>
 				)}
+				<button 
+					onClick={handleSaveJob}
+					disabled={isSaved}
+					className={`w-full py-2.5 rounded-md border text-sm font-semibold transition-all ${
+						isSaved 
+							? "border-emerald-500/50 text-emerald-500 bg-emerald-500/5 cursor-default" 
+							: "border-zinc-800 text-zinc-400 hover:bg-zinc-800"
+					}`}
+				>
+					{isSaved ? "Saved" : "Save Job"}
+				</button>
+				{showSignIn && (
+					<button 
+							onClick={handleGoogleLogin} 
+							className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-bold animate-in fade-in slide-in-from-top-2"
+					>
+							Sign In to Save
+					</button>
+    		)}
 			</div>
 		</div>
 	);

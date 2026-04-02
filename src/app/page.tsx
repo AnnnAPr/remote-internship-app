@@ -4,7 +4,9 @@ import { useState, useEffect, useMemo, Suspense } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Job } from "@/types/job";
 import JobCard from "@/components/JobCard";
-import { Loader2 } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/client";
 
 function HomeContent() {
 	const router = useRouter();
@@ -18,6 +20,9 @@ function HomeContent() {
 	const [activeSearchQuery, setActiveSearchQuery] = useState(initialSearch);
 	const [hasSearched, setHasSearched] = useState(!!initialSearch);
 	const [isLoading, setIsLoading] = useState(true);
+
+	const [user, setUser] = useState<User | null>(null);
+	const supabase = createClient();
 
 	useEffect(() => {
 		const fetchJobs = async () => {
@@ -35,6 +40,18 @@ function HomeContent() {
 			}
 		};
 		fetchJobs();
+	}, []);
+
+	useEffect(() => {
+		const getUser = async () => {
+			const { data: { user } } = await supabase.auth.getUser();
+			setUser(user);
+		};
+		getUser();
+		const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+			setUser(session?.user ?? null);
+		});
+		return () => subscription.unsubscribe();
 	}, []);
 
 	const handleSearch = (e: React.FormEvent) => {
@@ -55,6 +72,11 @@ function HomeContent() {
 		router.push(pathname);
 	}
 
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+		router.refresh();
+	}
+
 	const filteredJobs = useMemo(() => {
 		if (!activeSearchQuery.trim()) return [];
 		const query = activeSearchQuery.toLowerCase();
@@ -69,12 +91,27 @@ function HomeContent() {
 	return (
 		<main className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-blue-500/30 px-6 py-20 flex flex-col items-start max-w-7xl mx-0">
 			<header className="w-full max-w-4xl mb-16 flex flex-col items-start">
+				{user && (
+					<div className="flex items-center gap-4 absolute top-8 left-8">
+						<span className="text-sm font-medium text-zinc-300">
+							{user.email}
+						</span>
+						<div className="w-px h-4 bg-zinc-800"></div>
+						<button 
+							onClick={handleSignOut}
+							className="flex items-center gap-2 text-sm font-bold text-zinc-500 hover:text-white transition-all group"
+						>
+							<LogOut className="w-4 h-4 group-hover:scale-110" />
+							Log Out
+						</button>
+					</div>
+				)}
 				<h1 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
 					Remote Internship Search
 				</h1>
 
 				<p className="text-lg text-zinc-500 mb-10 max-w-2xl">
-					Find software engineering and data roles from top global companies.
+					Find remote software engineering and data roles from top global companies.
 				</p>
 
 				<form onSubmit={handleSearch} className="w-full flex flex-col sm:flex-row gap-4 justify-start items-start">
@@ -92,7 +129,7 @@ function HomeContent() {
 					</button>
 
 					{hasSearched && (
-						<button 
+						<button
 							type="button"
 							onClick={handleReset}
 							className="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-8 rounded-lg transition-all active:scale-98"
