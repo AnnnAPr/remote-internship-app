@@ -202,10 +202,16 @@ function HomeContent() {
         ) : (
           <div className="w-full">
             <div className="mb-8">
-              <p className="text-zinc-500 text-center">
-                <span className="text-purple-500 font-bold">{filteredJobs.length}</span> results
-                found for <span className="text-purple-500">&quot;{activeSearchQuery}&quot;</span>
-              </p>
+              {isShowingSavedJobs ? (
+                <p className="text-zinc-500 text-center">
+                  <span className="text-purple-500 font-bold">Saved Jobs</span>
+                </p>
+              ) : (
+                <p className="text-zinc-500 text-center">
+                  <span className="text-purple-500 font-bold">{filteredJobs.length}</span> results
+                  found for <span className="text-purple-500">&quot;{activeSearchQuery}&quot;</span>
+                </p>
+              )}
             </div>
 
             {isLoading ? (
