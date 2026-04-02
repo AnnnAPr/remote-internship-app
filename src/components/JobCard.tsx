@@ -177,7 +177,7 @@ export default function JobCard({ job }: JobCardProps) {
           <button
             onClick={handleGoogleLogin}
             disabled={isSigning}
-            className="bg-purple-300 text-zinc-950 px-4 py-2 rounded-md text-sm font-bold flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors animate-in fade-in slide-in-from-top-2"
+            className="bg-purple-200 text-zinc-950 px-4 py-2 rounded-md text-sm font-bold flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors animate-in fade-in slide-in-from-top-2"
           >
             {isSigning ? (
               "Signing In..."
