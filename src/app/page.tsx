@@ -89,12 +89,12 @@ function HomeContent() {
 	}, [jobs, activeSearchQuery]);
 
 	return (
-		<main className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-blue-500/30 px-6 py-20 flex flex-col items-start max-w-7xl mx-0">
-			<header className="w-full max-w-4xl mb-16 flex flex-col items-start">
+		<main className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-blue-500/30 px-6 py-20 flex flex-col items-center">
+			<header className="w-full mb-16 flex flex-col items-center">
 				{user && (
 					<div className="flex items-center gap-4 absolute top-8 left-8">
 						<span className="text-sm font-medium text-zinc-300">
-							{user.email}
+							<span className="text-purple-500">{user.email}</span>
 						</span>
 						<div className="w-px h-4 bg-zinc-800"></div>
 						<button 
@@ -106,26 +106,26 @@ function HomeContent() {
 						</button>
 					</div>
 				)}
-				<h1 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
-					Remote Internship Search
+				<h1 className="text-6xl md:text-7xl text-center md:text-5xl font-bold mb-6 text-white tracking-tight">
+					Remote <span className="text-purple-500">Internship</span> Search
 				</h1>
 
 				<p className="text-lg text-zinc-500 mb-10 max-w-2xl">
 					Find remote software engineering and data roles from top global companies.
 				</p>
 
-				<form onSubmit={handleSearch} className="w-full flex flex-col sm:flex-row gap-4 justify-start items-start">
+				<form onSubmit={handleSearch} className="w-full flex flex-col sm:flex-row gap-4 justify-center items-center">
 					<div className="relative w-full max-w-lg">
 						<input
 							type="text"
 							placeholder="Enter keyword (e.g. 'Frontend')..."
-							className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-lg focus:border-zinc-600 outline-none transition-colors"
+							className="text-purple-500 placeholder-purple-500 w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-lg focus:border-zinc-600 outline-none transition-colors"
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
 					</div>
-					<button type="submit" className="w-full sm:w-auto bg-white hover:bg-zinc-200 text-zinc-950 font-bold py-3 px-8 rounded-lg transition-all active:scale-98">
-						Search Jobs
+					<button type="submit" className="w-full sm:w-auto bg-purple-500 text-zinc-950 font-bold py-3 px-8 rounded-lg transition-all active:scale-98">
+						<span className="text-zinc-800">Search Jobs</span>
 					</button>
 
 					{hasSearched && (
@@ -134,23 +134,23 @@ function HomeContent() {
 							onClick={handleReset}
 							className="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 px-8 rounded-lg transition-all active:scale-98"
 						>
-							Reset
+							<span className="text-purple-500">Reset</span>
 						</button>
 					)}
 				</form>
 			</header>
 
 			{/* Main Content after user's search*/}
-			<section className="w-full max-w-6xl flex flex-col items-start">
+			<section className="w-full flex flex-col items-center">
 				{!hasSearched ? (
-					<div className="w-full py-12 border border-zinc-900 rounded-xl">
-						<p className="text-zinc-500 px-8">Ready to search? Enter a keyword above.</p>
+					<div className="max-w-xl py-12 rounded-xl flex justify-center">
+						<p className="text-center text-zinc-500 px-8 text-2xl">Ready to search? Enter a keyword above.</p>
 					</div>
 				) : (
 					<div className="w-full">
 						<div className="mb-8">
-							<p className="text-zinc-500">
-								<span className="text-white font-bold">{filteredJobs.length}</span> results found for &quot;{activeSearchQuery}&quot;
+							<p className="text-zinc-500 text-center">
+								<span className="text-purple-500 font-bold">{filteredJobs.length}</span> results found for <span className="text-purple-500">&quot;{activeSearchQuery}&quot;</span>
 							</p>
 						</div>
 
@@ -169,7 +169,7 @@ function HomeContent() {
 								))}
 							</div>
 						) : (
-							<p className="text-zinc-500 py-6">No jobs found matching your search. Try different keyword.</p>
+							<p className="text-center text-zinc-500 py-6">No jobs found matching your search. Try different keyword.</p>
 						)}
 					</div>
 				)}
