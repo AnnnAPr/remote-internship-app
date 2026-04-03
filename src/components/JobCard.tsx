@@ -43,6 +43,7 @@ export default function JobCard({ job, initiallySaved = false }: JobCardProps) {
       }
 
       const data = await res.json();
+      console.log("DATA in summary: ", data.summary);
       setSummary(data.summary);
     } catch (error) {
       console.error("Error generating summary:", error);
@@ -146,12 +147,34 @@ export default function JobCard({ job, initiallySaved = false }: JobCardProps) {
           {isLoading ? "Summarizing..." : "AI Summary"}
         </button>
         {summary && (
-          <div className="px-6 pb-6 animate-in fade-in slide-in-from-top-2 duration-300">
-            <div className="p-4 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-              <p className="text-sm text-zinc-300 leading-relaxed italic">{summary}</p>
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSummary(null)}
+          >
+            <div
+              className="bg-zinc-900 border border-zinc-800 p-8 rounded-xl max-w-md w-full relative shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col gap-4">
+                <h3 className="text-lg font-bold text-purple-500">Job Summary</h3>
+                <ul className="space-y-3">
+                  {summary.split("\n").map((point, index) => (
+                    <li key={index} className="text-sm text-zinc-300 leading-relaxed">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  className="mt-4 w-full py-2 bg-purple-500 hover:bg-purple-400 text-zinc-950 rounded font-semibold text-sm"
+                  onClick={() => setSummary(null)}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         )}
+
         <button
           onClick={handleSaveJob}
           disabled={isSaving || isSaved}

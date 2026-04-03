@@ -119,7 +119,8 @@ function HomeContent() {
         job.title.toLowerCase().includes(query) ||
         job.company.toLowerCase().includes(query) ||
         job.category.toLowerCase().includes(query) ||
-        job.description.toLowerCase().includes(query)
+        job.description.toLowerCase().includes(query) ||
+        job.location.toLowerCase().includes(query)
     );
   }, [isShowingSavedJobs, activeSearchQuery, jobs, savedJobs]);
 

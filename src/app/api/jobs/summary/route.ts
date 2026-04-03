@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     const prompt = `
 				Summarize the following internship position in 3 concise, punchy bullet points suitable for a student job seeker.
-				Do not include intro/outro text. Just the three bullet points, each starting with a default dot character.
+				Do not include intro/outro text. Just the three bullet points. Start each line with exactly one hyphen followed by a space (- ).
 				
 				Job Title: ${job.title}
 				Company: ${job.company}
