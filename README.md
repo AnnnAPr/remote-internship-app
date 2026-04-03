@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Remote Internship Search
 
-## Getting Started
+A minimalist, high-performance web application designed to help users find and manage remote internship opportunities.
 
-First, run the development server:
+## Features
+- **Global Search:** Real-time filtering for remote internship roles.
+- **AI Summarization:** One-click job summaries powered by **Groq AI**.
+- **Secure Auth:** Quick login via **Google OAuth** through Supabase.
+- **Save for Later:** Personalized dashboard to save and track interesting roles.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tech Stack
+- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS
+- **Backend/Database:** Supabase (Postgres)
+- **Authentication:** Supabase Auth (Google Provider)
+- **AI Integration:** Groq SDK for intelligent job analysis
+
+## Setup
+
+1. Clone the repository and install dependencies:
+  
+  ```
+    git clone <repository-url>
+    npm install
+  ```
+
+2. Environment Configuration
+
+Create a *.env.local* file in the root directory and add the following keys:
+
+```
+  # Supabase Configuration
+  NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+  # Groq AI Configuration
+  GROQ_API_KEY=your_groq_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run the Development Server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+    npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open http://localhost:3000 to view the application.
