@@ -3,12 +3,14 @@
 A minimalist, high-performance web application designed to help users find and manage remote internship opportunities.
 
 ## Features
+
 - **Global Search:** Real-time filtering for remote internship roles.
 - **AI Summarization:** One-click job summaries powered by **Groq AI**.
 - **Secure Auth:** Quick login via **Google OAuth** through Supabase.
 - **Save for Later:** Personalized dashboard to save and track interesting roles.
 
 ## Tech Stack
+
 - **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS
 - **Backend/Database:** Supabase (Postgres)
 - **Authentication:** Supabase Auth (Google Provider)
@@ -17,15 +19,15 @@ A minimalist, high-performance web application designed to help users find and m
 ## Setup
 
 1. Clone the repository and install dependencies:
-  
-  ```
-    git clone <repository-url>
-    npm install
-  ```
+
+```
+  git clone <repository-url>
+  npm install
+```
 
 2. Environment Configuration
 
-Create a *.env.local* file in the root directory and add the following keys:
+Create a _.env.local_ file in the root directory and add the following keys:
 
 ```
   # Supabase Configuration
@@ -41,6 +43,5 @@ Create a *.env.local* file in the root directory and add the following keys:
 ```
     npm run dev
 ```
-
 
 Open http://localhost:3000 to view the application.

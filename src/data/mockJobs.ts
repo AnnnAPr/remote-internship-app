@@ -138,20 +138,14 @@ export const mockJobs: Job[] = [
     isRemote: true,
   },
 
-
-
-
-
-
-
-
   {
     id: "other-3",
     url: "https://example.com/apply/other-2",
     title: "Product Solutions Intern",
     company: "Calabara",
     category: "other",
-    description: "Join our team as a product solutions intern. You will work on production systems, collaborate with cross-functional teams, and contribute to meaningful projects. This remote position offers a competitive hourly rate and professional career mentorship from senior engineers.",
+    description:
+      "Join our team as a product solutions intern. You will work on production systems, collaborate with cross-functional teams, and contribute to meaningful projects. This remote position offers a competitive hourly rate and professional career mentorship from senior engineers.",
     tags: ["Figma", "UI/UX", "Prototyping", "Excel", "PowerPoint"],
     location: "Remote",
     postedAt: "2026-04-01T03:43:19.768Z",
