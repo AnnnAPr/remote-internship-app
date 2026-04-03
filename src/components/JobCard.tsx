@@ -80,6 +80,9 @@ export default function JobCard({ job, initiallySaved = false }: JobCardProps) {
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(currentPath)}`,
+        queryParams: {
+          prompt: "select_account",
+        },
       },
     });
   };

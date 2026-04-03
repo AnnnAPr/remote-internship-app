@@ -14,6 +14,15 @@ export async function GET() {
 
     const data: RemotiveResponse = await res.json();
 
+    // Print real remotive job for demo
+    console.log("--- ONE SAMPLE JOB ---");
+    if (data.jobs && data.jobs.length > 0) {
+      const { description, ...jobWithoutDescription } = data.jobs[0];
+
+      console.log(JSON.stringify(jobWithoutDescription, null, 2));
+    }
+    console.log("--- END SAMPLE JOB ---");
+
     return NextResponse.json({
       jobs: mockJobs,
       realCount: data["job-count"],
