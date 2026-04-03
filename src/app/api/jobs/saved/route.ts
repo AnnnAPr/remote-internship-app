@@ -7,7 +7,6 @@ export async function GET() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log("user in saved jobs: ", user);
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -23,7 +22,6 @@ export async function GET() {
   }
 
   const jobs = data.map((item) => item.job_data);
-  console.log("jobs in saved jobs: ", jobs);
 
   return NextResponse.json({ jobs });
 }

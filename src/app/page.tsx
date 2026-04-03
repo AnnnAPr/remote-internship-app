@@ -33,8 +33,6 @@ function HomeContent() {
       try {
         const res = await fetch("/api/jobs");
         const data = await res.json();
-        console.log("DATA FROM API:", JSON.stringify(data, null, 2));
-        console.log("data.jobs: ", data.jobs);
         if (data.jobs) setJobs(data.jobs);
       } catch (error) {
         console.error("Failed to fetch jobs:", error);
@@ -64,7 +62,6 @@ function HomeContent() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchInput.trim()) return;
-    console.log("searchInput: ", searchInput);
     setActiveSearchQuery(searchInput);
     setHasSearched(true);
     const params = new URLSearchParams(searchParams.toString());
@@ -90,7 +87,6 @@ function HomeContent() {
     try {
       const res = await fetch("/api/jobs/saved");
       const data = await res.json();
-      console.log("saved jobs: ", data.jobs);
 
       if (data.jobs) {
         setSavedJobs(data.jobs);

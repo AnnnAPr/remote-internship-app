@@ -36,14 +36,11 @@ export default function JobCard({ job, initiallySaved = false }: JobCardProps) {
         }),
       });
 
-      console.log("RES: ", res);
-
       if (!res.ok) {
         throw new Error("Failed to generate summary");
       }
 
       const data = await res.json();
-      console.log("DATA in summary: ", data.summary);
       setSummary(data.summary);
     } catch (error) {
       console.error("Error generating summary:", error);
